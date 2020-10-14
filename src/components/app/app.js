@@ -31,20 +31,18 @@ export default class App extends Component {
     });
   };
 
-  addItem = () => {
+  addItem = (text) => {
     this.setState(({ todoData}) => {
-      let shallowCopy = [ ...todoData ];
+      let newArr = [ ...todoData ];
 
-      shallowCopy.push({
+      newArr.push({
         label: "New Item",
         important: false,
-        id: 4,
+        id: Math.random(),
       });
 
-      console.log(shallowCopy);
-
       return {
-        todoData: shallowCopy
+        todoData: newArr
       };
     })
   };
@@ -62,7 +60,7 @@ export default class App extends Component {
           todos={ this.state.todoData }
           onDeleted={ this.deleteItem }
         />
-        <ItemAddForm onAdded={ this.addItem }/>
+        <ItemAddForm onItemAdded={ this.addItem }/>
       </div>
     );
   }

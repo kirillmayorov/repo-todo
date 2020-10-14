@@ -1,9 +1,9 @@
 import React from 'react';
 import "./item-add-form.css";
 
-const ItemAddForm = ({ onAdded }) => {
+const ItemAddForm = ({ onItemAdded }) => {
   return (
-    <div className="item-add-form" onClick={onAdded}>
+    <div className="item-add-form" onClick={onItemAdded}>
       <button className="btn btn-outline-secondary">
         Add New Item
       </button>
