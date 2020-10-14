@@ -10,11 +10,19 @@ class TodoListItem extends React.Component {
   }
 
   onLabelClick = () => {
-    this.setState({ done: true})
+    this.setState( ( {done} ) => {
+      return {
+        done: !done
+      };
+    })
   };
 
   onMarkImportant = () => {
-    this.setState({important: true})
+    this.setState(( state ) => {
+      return {
+        important: !state.important
+      };
+    })
   }
 
   render() {
@@ -31,19 +39,22 @@ class TodoListItem extends React.Component {
     }
 
   return (
-    <span className={ classNames }>
-      <span className="todo-list-item-label" onClick={ this.onLabelClick }>
+    <span className={classNames}>
+      <span className="todo-list-item-label" onClick={this.onLabelClick}>
         {label}
       </span>
 
       <button
         type="button"
-        className="btn btn-outline-success btn-sm float-right">
-        <i className="fa fa-exclamation" onClick={this.onMarkImportant} />
+        className="btn btn-outline-success btn-sm float-right"
+        onClick={this.onMarkImportant}
+      >
+        <i className="fa fa-exclamation" />
       </button>
       <button
         type="button"
         className="btn btn-outline-danger btn-sm float-right"
+        onClick={ this.props.onDeleted }
       >
         <i className="fa fa-trash-o" />
       </button>
@@ -51,8 +62,6 @@ class TodoListItem extends React.Component {
   );
   }
 };
-
-// const TodoListItemFunc = () => {
   
 // };
 
