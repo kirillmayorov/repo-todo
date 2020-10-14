@@ -4,6 +4,7 @@ import AppHeader from '../app-header';
 import ItemStatusFilter from '../item-status-filter'
 import SearchPanel from '../search-panel';
 import TodoList from '../todo-list';
+import ItemAddForm from '../item-add-form'
 import './app.css';
 
 export default class App extends Component {
@@ -30,6 +31,24 @@ export default class App extends Component {
     });
   };
 
+  addItem = () => {
+    this.setState(({ todoData}) => {
+      let shallowCopy = [ ...todoData ];
+
+      shallowCopy.push({
+        label: "New Item",
+        important: false,
+        id: 4,
+      });
+
+      console.log(shallowCopy);
+
+      return {
+        todoData: shallowCopy
+      };
+    })
+  };
+
   render() {
 
     return (
@@ -43,6 +62,7 @@ export default class App extends Component {
           todos={ this.state.todoData }
           onDeleted={ this.deleteItem }
         />
+        <ItemAddForm onAdded={ this.addItem }/>
       </div>
     );
   }
