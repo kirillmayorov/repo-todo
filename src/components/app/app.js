@@ -8,17 +8,29 @@ import ItemAddForm from '../item-add-form'
 import './app.css';
 
 export default class App extends Component {
+  maxId = 100;
+
   state = {
     todoData: [
-    { label: "Drink Coffee", important: false, id: 1 },
-    { label: "Build React App", important: true, id: 2 },
-    { label: "Have a lunch", important: false, id: 3 },
-  ],
+      this.createTodoItem('Drink Coffee'),
+      this.createTodoItem('Build Awesome App'),
+      this.createTodoItem('Have a lunch')
+    ],
   };
+
+  createTodoItem(label) {
+
+    return {
+      label,
+      important: false,
+      done: false,
+      id: this.maxId++
+    };
+  }
 
   deleteItem = (id) => {
     this.setState(({ todoData }) => {
-      const idx = todoData.findIndex((el) => el.id === id);
+      const idx = todoData.findIndex(el => el.id === id);
 
       const before = todoData.slice(0, idx);
       const after = todoData.slice(idx + 1);
@@ -26,29 +38,33 @@ export default class App extends Component {
       const newArray = [...before, ...after];
 
       return {
-        todoData: newArray
-      }
+        todoData: newArray,
+      };
     });
   };
 
-  addItem = (text) => {
-    this.setState(({ todoData}) => {
-      let newArr = [ ...todoData ];
+  addItem = (label) => {
+      this.setState(({ todoData }) => {
+        label = "New Item";
+        const newItem = this.createTodoItem(label);
+        const newArr = [ ...todoData, newItem ];
+        return {
+          todoData: newArr,
+        };
+    });
+  };
 
-      newArr.push({
-        label: "New Item",
-        important: false,
-        id: Math.random(),
-      });
+  onToggleDone = id => 
+    {this.setState(({ todoData }) => {
+      console.log("toggle done", id);
+    });
+    };
 
-      return {
-        todoData: newArr
-      };
-    })
+  onToggleImportant = id => {
+    console.log("toggle important", id);
   };
 
   render() {
-
     return (
       <div className="todo-app">
         <AppHeader toDo={1} done={3} />
@@ -57,10 +73,12 @@ export default class App extends Component {
           <SearchPanel />
         </div>
         <TodoList
-          todos={ this.state.todoData }
-          onDeleted={ this.deleteItem }
+          todos={this.state.todoData}
+          onDeleted={this.deleteItem}
+          onToggleDone={this.onToggleDone}
+          onToggleImportant={this.onToggleImportant}
         />
-        <ItemAddForm onItemAdded={ this.addItem }/>
+        <ItemAddForm onItemAdded={this.addItem} />
       </div>
     );
   }
