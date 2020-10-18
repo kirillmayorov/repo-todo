@@ -6,7 +6,7 @@ import './todo-list.css'
 
 const TodoList = ({ todos, onDeleted, onToggleDone, onToggleImportant }) => {
 
-  const elements = todos.map( (item) => {
+  const elements = todos.map( item => {
 
   const {id, ...itemProps } = item; // itemProps - REST параметр
     
