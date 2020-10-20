@@ -24,7 +24,8 @@ export default class App extends Component {
       label,
       important: false,
       done: false,
-      id: this.maxId++
+      id: this.maxId++,
+      isVisible: true
     };
   }
 
@@ -85,6 +86,21 @@ export default class App extends Component {
     })
   };
 
+  onSearch = (text) => {
+    console.log(text);
+    this.setState(() => {
+      const labelText = 'Drink Coffee';
+      const newItems = this.state.todoData.filter((item) => item.label === labelText );
+
+      // console.log(newItems);
+      // console.log(this.state.todoData);
+
+      return({
+        todoData: newItems
+      })
+    })
+  }
+
   render() {
     const { todoData } = this.state; 
 
@@ -95,8 +111,8 @@ export default class App extends Component {
       <div className="todo-app">
         <AppHeader toDo={doneCount} done={todoCount} />
         <div className="top-panel d-flex">
+          <SearchPanel onSearch={ this.onSearch }/>
           <ItemStatusFilter />
-          <SearchPanel />
         </div>
         <TodoList
           todos={todoData}
